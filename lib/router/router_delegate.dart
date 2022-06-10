@@ -1,32 +1,4 @@
-/*
- * Copyright (c) 2021 Razeware LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
- * distribute, sublicense, create a derivative work, and/or sell copies of the
- * Software in any work that is designed, intended, or marketed for pedagogical or
- * instructional purposes related to programming, coding, application development,
- * or information technology.  Permission for such use, copying, modification,
- * merger, publication, distribution, sublicensing, creation of derivative works,
- * or sale is expressly withheld.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -45,8 +17,8 @@ import 'ui_pages.dart';
 
 class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageConfiguration> {
-  final List<Page> _pages = [];
-  ShoppingBackButtonDispatcher backButtonDispatcher;
+  final List<MaterialPage> _pages = [];
+  late ShoppingBackButtonDispatcher backButtonDispatcher;
 
   @override
   final GlobalKey<NavigatorState> navigatorKey;
@@ -158,7 +130,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
           break;
         case Pages.Details:
           if (pageConfig.currentPageAction != null) {
-            _addPageData(pageConfig.currentPageAction.widget, pageConfig);
+            _addPageData(pageConfig.currentPageAction!.widget!, pageConfig);
           }
           break;
         default:
@@ -211,7 +183,7 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
   }
 
   void _setPageAction(PageAction action) {
-    switch (action.page.uiPage) {
+    switch (action.page!.uiPage) {
       case Pages.Splash:
         SplashPageConfig.currentPageAction = action;
         break;
@@ -250,25 +222,25 @@ class ShoppingRouterDelegate extends RouterDelegate<PageConfiguration>
           break;
         case PageState.addPage:
           _setPageAction(appState.currentAction);
-          addPage(appState.currentAction.page);
+          addPage(appState.currentAction.page!);
           break;
         case PageState.pop:
           pop();
           break;
         case PageState.replace:
           _setPageAction(appState.currentAction);
-          replace(appState.currentAction.page);
+          replace(appState.currentAction.page!);
           break;
         case PageState.replaceAll:
           _setPageAction(appState.currentAction);
-          replaceAll(appState.currentAction.page);
+          replaceAll(appState.currentAction.page!);
           break;
         case PageState.addWidget:
           _setPageAction(appState.currentAction);
-          pushWidget(appState.currentAction.widget, appState.currentAction.page);
+          pushWidget(appState.currentAction.widget!, appState.currentAction.page!);
           break;
         case PageState.addAll:
-          addAll(appState.currentAction.pages);
+          addAll(appState.currentAction.pages!);
           break;
       }
     }

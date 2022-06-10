@@ -19,11 +19,11 @@ enum PageState {
 
 class PageAction {
   PageState state;
-  PageConfiguration page;
-  List<PageConfiguration> pages;
-  Widget widget;
+  PageConfiguration ?page;
+  List<PageConfiguration> ?pages;
+  Widget ?widget;
 
-  PageAction({this.state = PageState.none, this.page = null, this.pages = null, this.widget = null});
+  PageAction({this.state = PageState.none, this.page , this.pages, this.widget });
 }
 class AppState extends ChangeNotifier {
   bool _loggedIn = false;
@@ -31,8 +31,8 @@ class AppState extends ChangeNotifier {
   bool _splashFinished = false;
   bool get splashFinished => _splashFinished;
   final cartItems = [];
-  String emailAddress;
-  String password;
+  late String emailAddress = '';
+  late String password = '';
   PageAction _currentAction = PageAction();
   PageAction get currentAction => _currentAction;
   set currentAction(PageAction action) {
